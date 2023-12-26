@@ -19,19 +19,22 @@ namespace characters
                 Console.WriteLine("Enter quantity lifes for 1 person");
                 int quantity = int.Parse(Console.ReadLine());
                 string fraction = "";
+                bool relationship = true;
                 Console.WriteLine("Enter which fracture u will be\nQ - Neutral\nW - Enemy");
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.Q:
                         fraction = "Neutral";
+                        relationship = true;
                         break;
                     case ConsoleKey.W:
                         fraction = "Orc";
+                        relationship = false;
                         break;
                 }
                 int damage = random.Next(30, 50);
                 int hp = random.Next(70, 100);
-                person person = new person(name, x, y, quantity, damage, hp, fraction);
+                person person = new person(name, x, y, quantity, damage, hp, fraction,relationship);
                 person.input();
             }
             catch

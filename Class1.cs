@@ -18,7 +18,7 @@ namespace characters
         private int damage;
         private int max_hp;
         private string fraction;
-        public person(string name, int x, int y, int quantity_lifes, int damage, int hp, string fraction)
+        public person(string name, int x, int y, int quantity_lifes, int damage, int hp, string fraction, bool relationship)
         {
             this.name = name;
             this.x = x;
@@ -28,6 +28,7 @@ namespace characters
             this.hp = hp;
             this.max_hp = hp;
             this.fraction = fraction;
+            this.relationships = relationship;
             persons.Add(this);
         }
         Random rand = new Random();
@@ -110,6 +111,7 @@ namespace characters
         public void input()
         {
             string _fraction = "";
+            bool relationship = true;
             Console.WriteLine();
             Console.WriteLine("Enter how many persons you will have");
             int person_num = int.Parse(Console.ReadLine());
@@ -144,13 +146,14 @@ namespace characters
                             {
                                 case ConsoleKey.Q:
                                     _fraction = "Neutral";
+                                    relationship = true;   
                                     break;
                                 case ConsoleKey.W:
                                     _fraction = "Orc";
-                                    relationships = false;
+                                    relationship = false;
                                     break;
                             }
-                            person persona = new person(name, x_pers, y_pers, quantyty_lifes1, damage_pers, hp_pers, _fraction);
+                            person persona = new person(name, x_pers, y_pers, quantyty_lifes1, damage_pers, hp_pers, _fraction, relationship);
                             person_counter++;
                         }
                     }
