@@ -93,7 +93,6 @@ namespace characters
             quantity_lifes -= 1;
             x = 0;
             y = 0;
-            person_counter++;
         }
         private int taken_damage(int damage)
         {
@@ -106,6 +105,7 @@ namespace characters
             return hp;
         }
         int enemy_ch_count=0;
+        int enemy_char_max = 0;
         int person_counter = 1;
         int enemy_counter = 0;
         
@@ -159,6 +159,7 @@ namespace characters
                             if ((persons[i].fraction != persons[selected_character - 1].fraction))
                             {
                                 enemy_ch_count++;
+                                enemy_char_max = enemy_ch_count;
                             }
                         }
                     }
@@ -222,14 +223,20 @@ namespace characters
                         {
                             for (int z = 0; z < person_counter; z++)
                             {
+                               
                                 if ((persons[z].fraction != persons[selected_character - 1].fraction) && (persons[z].hp <= 0))
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("You win");
-                                    Console.ReadKey();
-                                    return;
+                                { 
+                                    enemy_ch_count--;
+                                    if(enemy_ch_count == 0)
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("You win");
+                                        Console.ReadKey();
+                                        return;
+                                    }
                                 }
                             }
+                            enemy_ch_count = enemy_char_max;
                             Console.Clear();
                             Console.WriteLine("A - to bring out info about character\nS - to move for X\nD - to move for Y\nF - to kill character\nG - to damage yourself\nH - to heal yourself\nJ - to get full health\nK - to swap character\n");
                             ConsoleKey need_button = Console.ReadKey().Key;
@@ -357,10 +364,10 @@ namespace characters
                                 {
                                     Console.WriteLine();
                                     Console.WriteLine($"HP enemy character:   {persons[i].taken_damage(team_damage)}");
-                                    if ((persons[i].hp <= 0)|| (persons[selected_character-1].hp <= 0))
-                                    {
-                                        person_counter--;
-                                    }
+                                    //if ((persons[i].hp <= 0)|| (persons[selected_character-1].hp <= 0))
+                                    //{
+                                    //    person_counter--;
+                                    //}
                                     Console.WriteLine("You were attacked in response");
                                     for (int j = 0; j < person_counter; j++)
                                     {
@@ -383,7 +390,6 @@ namespace characters
                                 {
                                     persons[i].x=-10;
                                     persons[i].y=-10;   
-                                    enemy_ch_count--;
                                 }
                                 Console.WriteLine("HP your character:  " + persons[selected_character - 1].hp);
                                 Console.WriteLine("Press any button to continue");
